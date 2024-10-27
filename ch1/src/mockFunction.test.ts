@@ -1,6 +1,12 @@
 import {sum, obj} from "./mockFunction";
 
 
+afterEach(() => {
+   jest.restoreAllMocks();
+   // jest.clearAllMocks();
+   // jest.resetAllMocks();
+});
+
 test('obj.minus 메서드가 한 번 호출되었다(spy 삽입)', () => {
     jest.spyOn(obj, 'minus');
     const result = obj.minus(1, 2);
