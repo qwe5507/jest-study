@@ -1,34 +1,44 @@
 import {sum, obj} from "./mockFunction";
 
 
+beforeEach(() => {
+    console.log('aa');
+});
+describe('beforeEach/afterEach 적용', () => {
+    beforeEach(() => {
+        console.log('bb');
+    });
+    test('obj.minus 메서드가 한 번 호출되었다(spy 삽입)', () => {
+        console.log(
+            'obj.minus 메서드가 한 번 호출되었다(spy 삽입)'
+        );
+        jest.spyOn(obj, 'minus');
+        const result = obj.minus(1, 2);
+        expect(obj.minus).toHaveBeenCalledTimes(1);
+        expect(result).toBe(-1);
+    });
+
+    test('obj.minus에 스파이를 심고 실행도 안되게', () => {
+        jest.spyOn(obj, 'minus').mockImplementation();
+        const result = obj.minus(1, 2);
+        expect(obj.minus).toHaveBeenCalledTimes(1);
+        expect(result).not.toBe(-1);
+    });
+
+    test('obj.minus에 스파이를 심고 리턴값을 바꾸게', () => {
+        jest.spyOn(obj, 'minus').mockImplementation((a, b) => a + b);
+        const result = obj.minus(1, 2);
+        expect(obj.minus).toHaveBeenCalledTimes(1);
+        expect(result).toBe(3);
+    });
+});
 afterEach(() => {
    jest.restoreAllMocks();
    // jest.clearAllMocks();
    // jest.resetAllMocks();
 });
-
-test('obj.minus 메서드가 한 번 호출되었다(spy 삽입)', () => {
-    jest.spyOn(obj, 'minus');
-    const result = obj.minus(1, 2);
-    expect(obj.minus).toHaveBeenCalledTimes(1);
-    expect(result).toBe(-1);
-});
-
-test('obj.minus에 스파이를 심고 실행도 안되게', () => {
-    jest.spyOn(obj, 'minus').mockImplementation();
-    const result = obj.minus(1, 2);
-    expect(obj.minus).toHaveBeenCalledTimes(1);
-    expect(result).not.toBe(-1);
-});
-
-test('obj.minus에 스파이를 심고 리턴값을 바꾸게', () => {
-    jest.spyOn(obj, 'minus').mockImplementation((a, b) => a + b);
-    const result = obj.minus(1, 2);
-    expect(obj.minus).toHaveBeenCalledTimes(1);
-    expect(result).toBe(3);
-});
-
 test('obj.minus에 스파이를 심고 리턴값을 서로 다르게 나오게', () => {
+    console.log('obj.minus에 스파이를 심고 리턴값을 서로 다르게 나오게');
     jest.spyOn(obj, 'minus')
         .mockImplementationOnce((a, b) => a + b) // 처음 실행일때 이게 실행
         .mockImplementationOnce(() => 5); // 두번째 실행일때 이게 실행
