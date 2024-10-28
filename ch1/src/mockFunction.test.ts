@@ -4,11 +4,11 @@ import {sum, obj} from "./mockFunction";
 beforeEach(() => {
     console.log('aa');
 });
-describe('beforeEach/afterEach 적용', () => {
+describe.skip('beforeEach/afterEach 적용', () => {
     beforeEach(() => {
         console.log('bb');
     });
-    test('obj.minus 메서드가 한 번 호출되었다(spy 삽입)', () => {
+    it('obj.minus 메서드가 한 번 호출되었다(spy 삽입)', () => {
         console.log(
             'obj.minus 메서드가 한 번 호출되었다(spy 삽입)'
         );
@@ -73,8 +73,7 @@ test('obj.minus에 스파이를 심고 리턴값을 서로 다르게 나오게(m
     expect(result1).toBe(5);
 });
 
-
-test('obj.minus에 스파이를 심고 리턴값을 서로 다르게 나오게(mockReturnValueOnce)', () => {
+test.skip('obj.minus에 스파이를 심고 리턴값을 서로 다르게 나오게(mockReturnValueOnce)', () => {
     jest.spyOn(obj, 'minus')
         .mockReturnValueOnce(5);
     const result1 = obj.minus(1, 2);
@@ -83,3 +82,5 @@ test('obj.minus에 스파이를 심고 리턴값을 서로 다르게 나오게(m
     expect(result1).toBe(5);
     expect(result2).toBe(-1);
 });
+
+test.todo('나중에 만들어야지');
